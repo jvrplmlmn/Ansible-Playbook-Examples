@@ -1,0 +1,6 @@
+---
+- hosts: web
+  sudo: true
+  tasks:
+    - name: Apache | Install | From Repo
+      apt: pkg=apache2 state=installed update_cache=true
