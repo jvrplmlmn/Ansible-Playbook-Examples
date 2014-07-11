@@ -1,0 +1,10 @@
+---
+- hosts: web
+  sudo: yes
+  roles:
+    - { role: apache }
+
+- hosts: haproxy
+  sudo: yes
+  roles:
+    - { role: haproxy }
