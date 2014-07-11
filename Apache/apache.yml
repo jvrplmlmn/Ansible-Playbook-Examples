@@ -2,8 +2,15 @@
 - hosts: web
   sudo: true
   tasks:
-    - name: Apache | Install | From Repo
-      apt: pkg=apache2 state=installed update_cache=true
+    - name: Updates apt cache
+      apt: update_cache=true
+
+    - name: Installs necessary packages
+      apt: pkg={{ item }} state=latest
+      with_items:
+        - apache2
+        - libapache2-mod-php5
+        - git
 
     - name: Push future default virtual host configuration
       copy: src=files/new-vhost dest=/etc/apache2/sites-available/new-vhost.conf mode=0640
@@ -27,6 +34,10 @@
     - name: Rolling back - Ending playbook
       fail: msg="Configuration file is not valid. Please check that before re-running the playbook."
       when: result|failed
+
+    - name: Deploy a test application
+      git: repo=https://github.com/leucos/ansible-tuto-demosite.git dest=/var/www/new-vhost
+      tags: deploy
 
     - name: Desactivates the default virtualhost
       command: a2dissite 000-default
