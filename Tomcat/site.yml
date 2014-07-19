@@ -1,0 +1,6 @@
+---
+# This playbooks deploys a simple standalone Tomcat 7 server.
+- hosts: tomcat-servers 
+  sudo: yes
+  roles:
+    - tomcat

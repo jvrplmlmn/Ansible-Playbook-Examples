@@ -1,0 +1,14 @@
+---
+- name: Install Java
+  yum: name=java-1.7.0-openjdk state=present
+
+- name: Add group Tomcat
+  group: name=tomcat
+
+- name: Add user Tomcat
+  user: name=tomcat group=tomcat
+
+#- name: Download Tomcat from source
+#- name: Extract archive
+#- name: Change ownership of Tomcat installation
+#- name: Wait for Tomcat to start
