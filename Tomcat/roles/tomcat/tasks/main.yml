@@ -21,4 +21,11 @@
 
 - name: Change ownership of Tomcat installation
   file: path=/opt/apache-tomcat owner=tomcat group=tomcat state=directory recurse=yes
+
+- name: Configure Tomcat server
+  template: src=server.xml.j2 dest=/opt/apache-tomcat/conf/server.xml
+
+- name: Configure Tomcat users
+  template: src=tomcat-users.xml.j2 dest=/opt/apache-tomcat/conf/tomcat-users.xml
+
 #- name: Wait for Tomcat to start
