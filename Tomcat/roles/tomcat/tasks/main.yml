@@ -8,7 +8,17 @@
 - name: Add user Tomcat
   user: name=tomcat group=tomcat
 
-#- name: Download Tomcat from source
-#- name: Extract archive
-#- name: Change ownership of Tomcat installation
+- name: Download Tomcat from source
+  get_url:
+    url=http://www.eu.apache.org/dist/tomcat/tomcat-7/v7.0.54/bin/apache-tomcat-7.0.54.tar.gz 
+    dest=/opt/apache-tomcat-7.0.54.tar.gz
+
+- name: Extract archive
+  command: /bin/tar xvf /opt/apache-tomcat-7.0.54.tar.gz -C /opt/ creates=/opt/apache-tomcat-7.0.54
+
+- name: Symlink install directory
+  file: src=/opt/apache-tomcat-7.0.54 path=/opt/apache-tomcat state=link
+
+- name: Change ownership of Tomcat installation
+  file: path=/opt/apache-tomcat owner=tomcat group=tomcat state=directory recurse=yes
 #- name: Wait for Tomcat to start
